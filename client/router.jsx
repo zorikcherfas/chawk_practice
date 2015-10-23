@@ -12,6 +12,7 @@ Meteor.startup(function() {
       <Route component={App}>
         <Router component={Map} path="/" />
         <Router component={Login} path="login" />
+        <Router component={Modal} path="modal" />
       </Route>
     </Router>
   )
