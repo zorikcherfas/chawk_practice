@@ -59,8 +59,8 @@ AddVolunteerModalContent = React.createClass({
           </div>
         </div>
         <div className="submit-modal-buttons">
-           <button onClick={this.props.hideModal} className="button">Submit</button>
-		  <button className="button-flat">Discard</button>
+          <button onClick={this.props.hideModal} className="button">Submit</button>
+    		  <button onClick={this.props.hideModal} className="button-flat">Discard</button>
         </div>
       </div>
     )
