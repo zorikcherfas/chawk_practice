@@ -1,37 +1,41 @@
+Meteor.startup(function() {
+  Mapbox.load();
+});
+Tracker.autorun(function () {
+  if (Mapbox.loaded()) {
+    L.mapbox.accessToken = Meteor.settings.public.accessToken;
+    var map = L.mapbox.map("map", Meteor.settings.public.mapId);
+ }
+});
+
 Map = React.createClass({
-
-  getInitialState(){
-      console.log('getInitialState');
-
-    return{
-      showModal : true
+  getInitialState() {
+    return {
+      showModal: false
     }
   },
+  // We need to pass in the type of modal we want to show.
+  // These are all set in the switch statement in our Modal component.
   showModal(modalType) {
-      console.log('showModal')
-
     this.setState({
       showModal: modalType
     })
   },
-  hideModal(e){
-  console.log('hideModel')
-
+  hideModal(e) {
     this.setState({
-      showModal :false
+      showModal: false
     })
   },
   render() {
     return (
       <div>
-      <div className="content-wrapper">
-
-        <h1>This is where the map goes</h1>
-        </div>
         <Sidenav showModal={this.showModal} />
-        <Modal 
-        showModal={this.state.showModal}
-        hideModal={this.hideModal} />
+        <div className="content-wrapper">
+          <Modal
+            showModal={this.state.showModal}
+            hideModal={this.hideModal} />
+            <div id="map" className="mapbox"></div>
+        </div>
       </div>
     )
   }
@@ -72,7 +76,7 @@ Sidenav = React.createClass({
           tooltipY={this.state.tooltipY}/>
         <ul className="sidenav-list">
           <SidenavIcons
-           showModal={this.props.showModal}
+            showModal={this.props.showModal}
             setTooltipDescription={this.setTooltipDescription}
             showTooltip={this.showTooltip}
             hideTooltip={this.hideTooltip} />
@@ -102,11 +106,9 @@ SidenavIcons = React.createClass({
       return (
         <li key={item.name}
           onClick={this.props.showModal.bind(null, item.description)}
-
           onMouseEnter={this.props.setTooltipDescription.bind(null, item)}
           onMouseOver={this.props.showTooltip}
           onMouseOut={this.props.hideTooltip}
-
           className="sidenav-list-item">
           <i className={item.name}></i>
         </li>
